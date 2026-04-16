@@ -1,0 +1,256 @@
+/* datos-mascota.scss */
+
+.bolivar-wrapper {
+    background-color: #FAFAFA;
+    min-height: 100vh;
+    padding: 40px;
+    padding-bottom: 100px;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+
+    * {
+        box-sizing: border-box;
+    }
+}
+
+::ng-deep {
+
+    /* --- Global Reset for Form.io internals if needed --- */
+    .bolivar-wrapper .formio-form {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    /* Fix Row Layout */
+    .bolivar-wrapper .formio-form .row {
+        display: flex;
+        margin: 0;
+        width: 100%;
+        justify-content: center;
+        gap: 0;
+    }
+
+    /* --- 1. SIDEBAR STEPPER (Col-md-3) --- */
+    .bolivar-wrapper .col-md-3 {
+        flex: 0 0 280px !important;
+        max-width: 280px !important;
+        background-color: #FFFFFF;
+        min-height: 800px;
+        display: flex;
+        flex-direction: column;
+        padding: 0 !important;
+        margin-right: 40px;
+        border-radius: 16px;
+        height: 100%;
+    }
+
+    /* Target the Custom HTML Component for Stepper */
+    .formio-component-steper {
+        padding: 40px 20px 40px 40px;
+        height: 100%;
+    }
+
+    /* --- 2. FORM CARD (Col-md-9) --- */
+    .bolivar-wrapper .col-md-9 {
+        flex: 1;
+        max-width: 800px !important;
+        background-color: #FFFFFF;
+        border-radius: 16px;
+        border: 1px solid #F5F5F5;
+        padding: 60px !important;
+        box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.10);
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Header */
+    .formio-component-header h2 {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        font-weight: 700;
+        color: #1A1A1A;
+    }
+
+    /* --- 3. INPUTS & LABELS --- */
+    .form-group {
+        margin-bottom: 24px;
+
+        label.col-form-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+
+            .required-star {
+                color: red;
+            }
+        }
+
+        /* Strengthening selector for inputs */
+        input.form-control,
+        select.form-control,
+        .form-control {
+            background-color: #FFFFFF !important;
+            border: 1px solid #E5E7EB !important;
+            border-radius: 8px !important;
+            /* Force rounding */
+            padding: 12px 16px !important;
+            height: auto;
+            min-height: 48px !important;
+            font-size: 15px !important;
+            color: #374151 !important;
+            box-shadow: none !important;
+
+            &:focus {
+                border-color: #2ECC71 !important;
+                box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.1) !important;
+            }
+        }
+
+        /* Remove default bootstrap appearance for selects to use custom arrow */
+        select.form-control {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232ECC71'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 16px center !important;
+            background-size: 20px !important;
+            padding-right: 40px !important;
+            /* Space for arrow */
+        }
+    }
+
+    /* --- 4. RADIO PILLS (Perro/Gato) --- */
+    .formio-component-radio {
+
+        div[role="radiogroup"] {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .radio,
+        .form-check-inline {
+            flex: 1;
+            margin: 0;
+            padding: 0;
+            display: block;
+            position: relative;
+        }
+
+        input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 5;
+            left: 0;
+            top: 0;
+            margin: 0;
+        }
+
+        label.form-check-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 48px;
+            border: 1px solid #E5E7EB !important;
+            border-radius: 100px !important;
+            background-color: #FFFFFF !important;
+            color: #6B7280;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+            transition: all 0.2s;
+            position: relative;
+            z-index: 1;
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+
+        /* Active State */
+        input[type="radio"]:checked+label.form-check-label {
+            background-color: #E5F4EE !important;
+            border-color: #E5F4EE !important;
+            color: #1A1A1A !important;
+            font-weight: 600;
+        }
+
+        label.form-check-label:hover {
+            background-color: #F9FAFB !important;
+        }
+    }
+
+    /* --- 5. STICKY FOOTER BUTTON --- */
+    /* Target the container first */
+    .formio-component-continuar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #1A1A1A;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        z-index: 1000;
+        margin: 0 !important;
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+
+        /* Target the button inside specifically */
+        button,
+        .btn,
+        .btn-primary {
+            background-color: #FFD200 !important;
+            border: none !important;
+            border-radius: 100px !important;
+            padding: 12px 60px !important;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            color: #1A1A1A !important;
+            width: auto !important;
+            min-width: 240px;
+            height: 48px;
+            text-transform: none;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: #F7C600 !important;
+                box-shadow: none !important;
+                color: #1A1A1A !important;
+            }
+
+            i {
+                display: none !important;
+            }
+        }
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 991px) {
+        .bolivar-wrapper .formio-form .row {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bolivar-wrapper .col-md-3 {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-right: 0;
+            margin-bottom: 20px;
+            min-height: auto;
+        }
+
+        .bolivar-wrapper .col-md-9 {
+            padding: 30px !important;
+        }
+    }
+}

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>SeguroMascotasApp</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body><app-root></app-root>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // --- 1. FUNCIÓN DE VISIBILIDAD (Lógica Core) ---
+      function checkButtonVisibility() {
+        const track = document.querySelector('.plans-carousel-track');
+        const prevBtn = document.querySelector('.js-carousel-prev');
+
+        if (track && prevBtn) {
+          const controlsContainer = prevBtn.parentElement;
+          // Si el contenido cabe (ancho contenido <= ancho visible + margen error)
+          if (track.scrollWidth <= track.clientWidth + 5) {
+            controlsContainer.style.display = 'none';
+          } else {
+            controlsContainer.style.display = 'flex';
+          }
+        }
+      }
+
+      // --- 2. EL VIGÍA (MutationObserver) ---
+      // Reemplaza a los setTimeout: Espera reactivamente a que aparezca el carrusel
+      const observer = new MutationObserver((mutations, obs) => {
+        const track = document.querySelector('.plans-carousel-track');
+        if (track) {
+          // ¡El carrusel ya existe en el DOM!
+          checkButtonVisibility();
+          window.addEventListener('resize', checkButtonVisibility);
+
+          // Ya cumplimos, desconectamos para ahorrar recursos
+          obs.disconnect();
+        }
+      });
+
+      // Empezar a vigilar el cuerpo del documento buscando cambios
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+
+      // --- 3. LÓGICA DE NAVEGACIÓN (Eventos Globales) ---
+      // Se adjunta al body inmediatamente, no necesita esperar
+      document.body.addEventListener('click', function (e) {
+        const prevBtn = e.target.closest('.js-carousel-prev');
+        const nextBtn = e.target.closest('.js-carousel-next');
+
+        if (!prevBtn && !nextBtn) return;
+        const track = document.querySelector('.plans-carousel-track');
+        if (!track) return;
+
+        const firstCard = track.firstElementChild;
+        const cardWidth = firstCard ? firstCard.offsetWidth : 300;
+        const gap = 20;
+        const moveAmount = cardWidth + gap;
+
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const isAtEnd = track.scrollLeft >= (maxScroll - 10);
+        const isAtStart = track.scrollLeft <= 10;
+
+        if (prevBtn) {
+          if (isAtStart) {
+            track.scrollTo({ left: maxScroll, behavior: 'smooth' });
+          } else {
+            track.scrollBy({ left: -moveAmount, behavior: 'smooth' });
+          }
+        }
+        else if (nextBtn) {
+          if (isAtEnd) {
+            track.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            track.scrollBy({ left: moveAmount, behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

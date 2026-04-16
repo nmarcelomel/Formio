@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>SeguroMascotasApp</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body><app-root></app-root>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // FUNCIÓN 1: Ocultar botones si no son necesarios (Ej. PC grande)
+      function checkButtonVisibility() {
+        const track = document.querySelector('.plans-carousel-track');
+        const prevBtn = document.querySelector('.js-carousel-prev');
+
+        if (track && prevBtn) {
+          const controlsContainer = prevBtn.parentElement;
+          // Si el contenido es más pequeño o igual al contenedor, ocultamos los botones
+          if (track.scrollWidth <= track.clientWidth + 5) {
+            controlsContainer.style.display = 'none';
+          } else {
+            // Si hay scroll, aseguramos que se vean (usamos flex porque así estaba en el HTML)
+            controlsContainer.style.display = 'flex';
+          }
+        }
+      }
+
+      // Ejecutar verificación al inicio y al cambiar tamaño de ventana
+      window.addEventListener('load', checkButtonVisibility);
+      window.addEventListener('resize', checkButtonVisibility);
+      // Un pequeño delay por si Form.io tarda en renderizar
+      setTimeout(checkButtonVisibility, 1000);
+
+      // FUNCIÓN 2: Lógica de Movimiento (Clics)
+      document.body.addEventListener('click', function (e) {
+        const prevBtn = e.target.closest('.js-carousel-prev');
+        const nextBtn = e.target.closest('.js-carousel-next');
+
+        if (!prevBtn && !nextBtn) return;
+        const track = document.querySelector('.plans-carousel-track');
+        if (!track) return;
+
+        const firstCard = track.firstElementChild;
+        // Asumimos 300px si no se detecta la tarjeta, pero el CSS ya lo fuerza
+        const cardWidth = firstCard ? firstCard.offsetWidth : 300;
+        const gap = 20;
+        const moveAmount = cardWidth + gap;
+
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        // Tolerancia pequeña (10px) para saber si estamos AL FINAL
+        const isAtEnd = track.scrollLeft >= (maxScroll - 10);
+        const isAtStart = track.scrollLeft <= 10;
+
+        if (prevBtn) {
+          if (isAtStart) {
+            track.scrollTo({ left: maxScroll, behavior: 'smooth' });
+          } else {
+            track.scrollBy({ left: -moveAmount, behavior: 'smooth' });
+          }
+        }
+        else if (nextBtn) {
+          // LÓGICA SIMPLIFICADA PARA MÓVIL:
+          // Solo volvemos al inicio si YA ESTAMOS en el final.
+          // Si no estamos en el final, avanzamos (el navegador se detendrá solo al llegar al tope).
+          if (isAtEnd) {
+            track.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            track.scrollBy({ left: moveAmount, behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

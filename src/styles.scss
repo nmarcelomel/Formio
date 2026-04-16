@@ -1,0 +1,510 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Bootstrap CSS - Required for Formio default theme */
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+/* Formio Complete Styles - Includes all Form.io components styling */
+@import "formiojs/dist/formio.full.min.css";
+
+/* =========================================
+   UNIVERSAL RESET - DEFINITIVE FIX (TOP GAP)
+   ========================================= */
+/* 1. MATAR MÁRGENES DEL NAVEGADOR (CRÍTICO) */
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    /* Evita scroll horizontal */
+}
+
+/* 2. FORZAR COMPORTAMIENTO DE BLOQUE EN APP-ROOT */
+/* Angular renderiza app-root como inline por defecto, causando espacios fantasma */
+app-root {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    min-height: 100%;
+}
+
+/* 3. ELIMINAR CUALQUIER PADDING DE CONTENEDORES INTERNOS */
+.main-container,
+.container,
+.container-fluid {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* 4. ASEGURAR QUE EL FORMULARIO TOQUE EL TECHO */
+.formio-form {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* =========================================
+   HERO BANNER - Base Styles
+   ========================================= */
+.hero-wrapper {
+    /* NO incluir background-image aquí - será dinámico desde Form.io */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 60px 20px;
+}
+
+/* =======================================================
+   LIMPIEZA TOTAL DE CABECERA (NO TOCAR)
+   ======================================================= */
+
+/* 1. Ocultar todo el contenedor de navegación del Wizard */
+/* Esto mata las pestañas y el spinner de carga superior */
+.formio-wizard-nav-container {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+
+
+/* Estilos de texto movidos a inline styles en el HTML del componente Form.io para control total desde CMS */
+/*
+.hero-text-overlay {
+    position: absolute;
+    bottom: 80px;
+    left: 10%;
+    z-index: 2;
+    text-align: left;
+}
+
+.hero-title-main {
+    color: #FFFFFF;
+    font-size: 32px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    margin-bottom: 10px;
+}
+
+.hero-subtitle-main {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+*/
+
+.hero-content {
+    text-align: center;
+    color: #ffffff;
+    max-width: 800px;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-wrapper {
+        min-height: 400px;
+        padding: 40px 15px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+}
+
+/* Old Floating Form Card styles removed to avoid conflicts */
+
+
+
+/* 5. LIMPIEZA ADICIONAL DE FORM.IO (Preservada) */
+.formio-loader-wrapper,
+formio-loader,
+.loader-wrapper,
+.formio-wizard-nav-container,
+ul.pagination {
+    display: none !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    z-index: -9999 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    pointer-events: none !important;
+}
+
+/* =========================================
+   ELIMINACIÓN DEL LOADER DE FORM.IO
+   Targeting via DOM inspection
+   ========================================= */
+/* 1. Ocultar el componente loader específico */
+formio-loader {
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: absolute !important;
+    /* Lo sacamos del flujo para que no ocupe espacio */
+    z-index: -9999 !important;
+}
+
+/* 2. Colapsar el contenedor que envuelve al loader */
+/* Usamos el selector de atributo para encontrar el div que Form.io crea con estilo inline */
+div[style*="height: 200px"] {
+    height: 0 !important;
+    min-height: 0 !important;
+    display: none !important;
+}
+
+/* 3. Asegurar que el contenedor del formulario no herede el espacio */
+.formio-loader-wrapper {
+    display: none !important;
+}
+
+/* =========================================
+   PLANS AND COVERAGES CAROUSEL
+   Modern Mobile-First Horizontal Slider
+   ========================================= */
+
+/* 1. Contenedor del Carrusel (The Track) */
+/* Aplica esta clase al componente "Columns" o ".row" que contiene los planes */
+/* 1. EL RIEL (Track) */
+.plans-carousel-track {
+    /* Mantenemos la estructura flexible */
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-behavior: smooth !important;
+
+    /* CAMBIO CLAVE PARA CENTRADO (DESKTOP): */
+    /* 1. Que el ancho sea solo el del contenido */
+    width: fit-content !important;
+    /* 2. Pero nunca más ancho que la pantalla (para móvil) */
+    max-width: 100% !important;
+    /* 3. Centrar el contenedor en la página */
+    margin: 0 auto !important;
+
+    padding: 20px 5px !important;
+    gap: 20px;
+
+    /* Ajustes para matar estilos de Bootstrap Row */
+    /* margin-left: 0 !important; -- ELIMINADO para permitir auto */
+    /* margin-right: 0 !important; -- ELIMINADO para permitir auto */
+
+    /* Ocultar barra de scroll visualmente */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.plans-carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+/* 2. LAS TARJETAS (Hijos directos) */
+/* Esto afecta a CUALQUIER div que sea hijo directo del track */
+.plans-carousel-track>div {
+    flex: 0 0 auto !important;
+    /* No encogerse */
+    width: 300px !important;
+    /* Ancho fijo PC */
+    max-width: 300px !important;
+    display: block !important;
+}
+
+/* 3. MÓVIL */
+@media (max-width: 768px) {
+    .plans-carousel-track>div {
+        width: 85vw !important;
+        /* 85% de la pantalla */
+        max-width: 85vw !important;
+    }
+}
+
+/* 4. Seguridad de Desbordamiento Global */
+/* Asegura que el contenedor padre no tenga scroll indeseado */
+.plans-section-wrapper {
+    overflow: hidden;
+    width: 100%;
+}
+
+/* =========================================
+   CAROUSEL CONTROLS (ARROWS)
+   Replaces previous dots
+   ========================================= */
+
+/* CONTENEDOR DE CONTROLES (Visible siempre) */
+.carousel-controls-container {
+    display: flex !important;
+    /* Forzamos que se vea */
+    justify-content: center;
+    gap: 30px;
+    margin-top: 25px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+/* BOTONES (Estética) */
+.carousel-control-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: #009C5D;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.carousel-control-btn:active {
+    transform: scale(0.9);
+    background-color: #f0f0f0;
+}
+
+/* =========================================
+   FLOATING FORM CARD - Overlay Effect
+   ========================================= */
+
+/* 1. OCULTAR EL TEXTO DEL BANNER EN MÓVIL */
+@media (max-width: 768px) {
+    .desktop-banner-text {
+        display: none !important;
+        /* ¡Adiós estorbo! */
+    }
+}
+
+/* 2. AJUSTAR LA TARJETA FLOTANTE (Más agresiva) */
+.floating-form-card {
+    /* Aumentamos el margen negativo para que suba más sobre la foto */
+    margin-top: -80px !important;
+
+    background-color: white !important;
+    border-radius: 20px 20px 0 0 !important;
+    /* Redondeado solo arriba queda muy moderno */
+    box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.1) !important;
+    padding: 30px 20px !important;
+    position: relative !important;
+    z-index: 20 !important;
+
+    /* Ancho casi total */
+    width: 95% !important;
+    z-index: 50 !important;
+    /* Siempre encima de la foto */
+    display: block !important;
+}
+
+/* =========================================
+   MÓVIL (Pantallas < 768px)
+   Corrección Nuclear de Posicionamiento
+   ========================================= */
+@media (max-width: 768px) {
+
+    /* 1. DOMAR LA IMAGEN (Versión Agresiva) */
+    /* Reducimos altura para subir todo el contenido siguiente */
+    .hero-wrapper {
+        height: 450px !important;
+        min-height: 450px !important;
+        align-items: flex-end !important;
+        padding-bottom: 0 !important;
+    }
+
+    /* 2. SUBIR EL FORMULARIO (Versión Superposición Total) */
+    .floating-form-card {
+        /* Sube 220px: Esto garantiza que muerda casi la mitad de la foto */
+        margin-top: -220px !important;
+
+        /* Aseguramos ancho y posición */
+        width: 94% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+
+        /* Estética */
+        z-index: 100 !important;
+        /* Capa superior absoluta */
+        position: relative !important;
+        background-color: #ffffff !important;
+        border-radius: 20px 20px 0 0 !important;
+        box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.2) !important;
+        padding: 30px 20px !important;
+        display: block !important;
+    }
+}
+
+/* =========================================
+   UTILIDADES JS (Centrado Desktop y Limpieza)
+   ========================================= */
+/* 1. Centrado forzado por JS cuando todo cabe */
+.force-center {
+    justify-content: center !important;
+}
+
+/* 2. Matar el div de errores fantasma que rompe el flex */
+.plans-carousel-track>.formio-errors {
+    display: none !important;
+    width: 0 !important;
+    flex: none !important;
+}
+
+/* Asegurar que las reglas de tarjeta no apliquen a errores */
+.plans-carousel-track>div.formio-errors {
+    width: 0 !important;
+    display: none !important;
+}
+
+/* =========================================
+   PC / DESKTOP (Pantallas > 992px)
+   Objetivo: A la derecha y arriba (flotando)
+   ========================================= */
+@media (min-width: 992px) {
+    .floating-form-card {
+        /* FUERZA BRUTA: Sube 550px para entrar al banner */
+        /* Ajusta este valor si sube demasiado o muy poco */
+        margin-top: -550px !important;
+
+        /* ALINEACIÓN A LA DERECHA */
+        width: 400px !important;
+        /* Tarjeta más angosta */
+        margin-left: auto !important;
+        /* Empuja a la derecha */
+        margin-right: 10% !important;
+        /* Margen desde el borde derecho */
+
+        /* Estética completa */
+        border-radius: 15px !important;
+        padding: 40px !important;
+    }
+
+}
+
+/* COLAPSAR ELEMENTOS OCULTOS (Eliminar huecos vacíos) */
+.plans-carousel-track>.formio-hidden,
+.plans-carousel-track>div[hidden],
+.plans-carousel-track>div[style*="display: none"] {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    flex: 0 0 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+/* GHOST BUSTER: Eliminar huecos de columnas ocultas */
+.plans-carousel-track>.col-md-0,
+.plans-carousel-track>.hidden,
+.plans-carousel-track>.formio-hidden {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    flex: 0 0 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow: hidden !important;
+}
+
+/* ESTADO DESHABILITADO DEL BOTÓN DE ENVÍO */
+button[disabled],
+button.btn-disabled,
+.btn.disabled {
+    background-color: #e0e0e0 !important;
+    /* Gris claro */
+    color: #999999 !important;
+    /* Texto gris oscuro */
+    border-color: #d0d0d0 !important;
+    cursor: not-allowed !important;
+    /* Muestra signo de prohibido */
+    box-shadow: none !important;
+    opacity: 1 !important;
+    /* Evita transparencias raras de Bootstrap */
+}
+
+/* === 1. ESTADO "INVALIDO / INCOMPLETO" (Gris) === */
+/* Se aplica a cualquier botón primario que tenga el atributo 'disabled' */
+.btn-primary:disabled,
+.btn-primary.disabled,
+fieldset[disabled] .btn-primary {
+    background-color: #E0E0E0 !important;
+    /* Gris Claro */
+    color: #9E9E9E !important;
+    /* Texto Gris */
+    border-color: #D6D6D6 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    /* Forzar opacidad al 100% para que el gris se vea sólido */
+}
+
+/* === 2. ESTADO "VALIDO / LISTO" (Amarillo Corporativo) === */
+/* Se aplica cuando el botón NO está disabled */
+.btn-primary:not(:disabled):not(.disabled) {
+    background-color: #FFDC5D !important;
+    /* Amarillo */
+    color: #004C35 !important;
+    /* Verde */
+    border: 1px solid #FFDC5D !important;
+    /* Borde del mismo color */
+    font-weight: 700 !important;
+    box-shadow: 0 4px 12px rgba(255, 220, 93, 0.4) !important;
+    transition: all 0.3s ease-in-out !important;
+}
+
+/* Efecto Hover (Solo cuando está habilitado) */
+.btn-primary:not(:disabled):not(.disabled):hover {
+    background-color: #ffe68a !important;
+    /* Un amarillo un poco más claro al pasar el mouse */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 220, 93, 0.6) !important;
+}
+
+/* AJUSTE DE BOTÓN: ANCHO VS MÓVIL/PC */
+/* Por defecto (Móvil) ya es 100% gracias a la opción 'Block' de Form.io */
+
+/* En PC (Pantallas grandes) forzamos un tamaño fijo */
+@media (min-width: 768px) {
+    .responsive-submit-btn {
+        width: 300px !important;
+        /* Ancho fijo elegante */
+        display: block !important;
+        /* Comportamiento de bloque */
+        margin-left: auto !important;
+        /* Margen auto a la izq */
+        margin-right: auto !important;
+        /* Margen auto a la der (ESTO LO CENTRA) */
+    }
+}

@@ -1,0 +1,188 @@
+// Variables
+$breakpoint-mobile: 767px;
+$card-width-desktop: 350px;
+$card-width-mobile: 85%;
+$container-max-width: 1200px;
+$gap-size: 1.25rem; // 20px
+$padding-mobile: 1.25rem; // 20px
+
+.landing-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 1.25rem;
+}
+
+/* ========================================
+   ESTILOS PARA FORM.IO (con ::ng-deep)
+   ======================================== */
+// Usar ::ng-deep para penetrar el contenido dinámico de Form.io
+:host ::ng-deep {
+
+    /* CONFIGURACIÓN PARA ESCRITORIO (Centrado) */
+    .contenedor-planes-dinamico {
+        &.row {
+            display: flex !important;
+            justify-content: center !important;
+            flex-wrap: nowrap !important;
+            gap: $gap-size;
+            margin: 0 auto !important;
+            max-width: $container-max-width;
+        }
+
+        .col-md-3 {
+            flex: 0 0 $card-width-desktop !important;
+            max-width: $card-width-desktop !important;
+        }
+    }
+
+    /* CONFIGURACIÓN PARA MÓVIL (Carrusel) */
+    @media (max-width: $breakpoint-mobile) {
+        .contenedor-planes-dinamico {
+            &.row {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory !important;
+                padding: $padding-mobile !important;
+                justify-content: flex-start !important;
+
+                // Smooth scrolling
+                -webkit-overflow-scrolling: touch;
+                scroll-behavior: smooth;
+
+                // Ocultar scrollbar (cross-browser)
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            .col-md-3 {
+                flex: 0 0 $card-width-mobile !important;
+                max-width: $card-width-mobile !important;
+                scroll-snap-align: center !important;
+                scroll-snap-stop: always;
+            }
+        }
+    }
+
+    /* MEJORAS DE UX - Planes */
+    .contenedor-planes-dinamico .col-md-3 {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        // Efecto hover en desktop
+        @media (min-width: 768px) {
+            &:hover {
+                transform: translateY(-0.5rem);
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            }
+        }
+    }
+
+    /* =========================================
+     SECCIÓN DIFERENCIAL (¿Qué nos diferencia?)
+     ========================================= */
+    .diff-container {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        max-width: 1100px;
+        margin: 2.5rem auto;
+        font-family: 'Roboto', sans-serif;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    /* BLOQUE IZQUIERDO (VERDE) */
+    .diff-box-left {
+        background: linear-gradient(180deg, #E7FAF5 0%, #F6FCFC 100%);
+        border-radius: 1rem 0 0 1rem;
+        padding: 2.5rem 1.875rem;
+        flex: 1;
+        min-width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* BLOQUE CENTRAL (IMAGEN) */
+    .diff-box-center {
+        flex: 0 0 auto;
+        background: transparent;
+        display: flex;
+        align-items: flex-end;
+        z-index: 10;
+        margin: 0 -1px;
+    }
+
+    .diff-box-center img {
+        display: block;
+        height: 380px;
+        width: auto;
+        object-fit: cover;
+        filter: drop-shadow(0 0.625rem 0.9375rem rgba(0, 0, 0, 0.1));
+    }
+
+    /* BLOQUE DERECHO (BLANCO) */
+    .diff-box-right {
+        background-color: #ffffff;
+        border-radius: 0 1rem 1rem 0;
+        box-shadow: 0.625rem 0.625rem 1.875rem rgba(0, 0, 0, 0.05);
+        padding: 2.5rem 1.875rem;
+        flex: 1;
+        min-width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .diff-title {
+        color: #282828;
+        font-weight: 700;
+        font-size: 1.375rem;
+        margin-top: 0;
+        margin-bottom: 1.875rem;
+    }
+
+    .diff-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5625rem;
+    }
+
+    .diff-icon {
+        width: 2rem;
+        height: 2rem;
+        margin-right: 0.9375rem;
+        flex-shrink: 0;
+        object-fit: contain;
+    }
+
+    .diff-text {
+        font-size: 0.9375rem;
+        color: #282828;
+        line-height: 1.4;
+    }
+
+    /* RESPONSIVE (MÓVIL) - Sección Diferencial */
+    @media (max-width: 900px) {
+        .diff-container {
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1.25rem;
+        }
+
+        .diff-box-left,
+        .diff-box-right {
+            border-radius: 1rem;
+            width: 100%;
+            margin-bottom: 1.25rem;
+        }
+
+        .diff-box-center {
+            display: none; // Ocultar imagen en móvil
+        }
+    }
+}
